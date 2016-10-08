@@ -16,14 +16,13 @@
 //
 // Images dimensions
 // WIDTH x HEIGHT
-// bira.jpg - 45x110 ; rakia.jpg - 35x110 ;
-// salata.jpg - 130x110 ; shopska-salata.gif - 119x100
-// nakov.jpg - 100 x 100
+// bira.png - 45x110 ; rakia.png - 35x110 ;
+// salata.png - 130x110 ; salata-shopska.png - 130x110
+// nakov.png - 110x110
 //
 
 function game() {
-	/*
-	// A Way of loading the images
+	/*// A Way of loading the images
 	let nakov = new Image();
 	let salataShopska = new Image();
 	let biraImg = new Image();
@@ -32,7 +31,7 @@ function game() {
 
 	// catcher
 	nakov.onload = function () {
-		ctx.drawImage(nakov, 350, 500);
+		ctx.drawImage(nakov, 0, 0);
 	};
 	// salads
 	salataShopska.onload = function () {
@@ -43,19 +42,18 @@ function game() {
 	};
 	// alcohol
 	biraImg.onload = function () {
-		ctx.drawImage(biraImg, 150, 0);
+		ctx.drawImage(biraImg, biraPos.x, biraPos.y);
 	};
 	rakiaImg.onload = function () {
-		ctx.drawImage(rakiaImg, 250, 0);
+		ctx.drawImage(rakiaImg, 0, 0);
 	};
 
-	// load image
-	biraImg.src = 'images/bira.jpg';
-	rakiaImg.src = 'images/rakia.jpg';
-	salataShopska.src = 'images/shopska-salata.gif';
-	salata.src = 'images/salata.jpg';
-	nakov.src = 'images/nakov.jpg'
-	*/
+	// load images
+	biraImg.src = 'images/bira.png';
+	rakiaImg.src = 'images/rakia.png';
+	salataShopska.src = 'images/salata-shopska.png';
+	salata.src = 'images/salata.png';
+	nakov.src = 'images/nakov.png';*/
 }
 
 game();
