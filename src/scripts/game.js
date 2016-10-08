@@ -22,38 +22,63 @@
 //
 
 function game() {
-	/*// A Way of loading the images
-	let nakov = new Image();
-	let salataShopska = new Image();
+	// A Way of loading the images
+	let nakovImg = new Image();
+	let salataShopskaImg = new Image();
 	let biraImg = new Image();
 	let rakiaImg = new Image();
-	let salata = new Image();
+	let salataImg = new Image();
 
-	// catcher
-	nakov.onload = function () {
-		ctx.drawImage(nakov, 0, 0);
-	};
-	// salads
-	salataShopska.onload = function () {
-		ctx.drawImage(salataShopska, 0, 0);
-	};
-	salata.onload = function () {
-		ctx.drawImage(salata, 350, 0);
-	};
-	// alcohol
-	biraImg.onload = function () {
-		ctx.drawImage(biraImg, biraPos.x, biraPos.y);
-	};
-	rakiaImg.onload = function () {
-		ctx.drawImage(rakiaImg, 0, 0);
-	};
+	//Objects
+	let nakov = {x:0};
 
-	// load images
-	biraImg.src = 'images/bira.png';
-	rakiaImg.src = 'images/rakia.png';
-	salataShopska.src = 'images/salata-shopska.png';
-	salata.src = 'images/salata.png';
-	nakov.src = 'images/nakov.png';*/
+	//Constant values
+	let nakovSpeed = 10;
+
+	window.addEventListener('keydown', moveingNakov);
+
+	function moveingNakov(event) {
+		switch (event.code) {
+			case 'ArrowLeft':
+				nakov.x -= nakovSpeed;
+				break;
+			case 'ArrowRight':
+				nakov.x += nakovSpeed;
+		}
+		draw()
+	}
+
+	function draw() {
+		//clearing the frame
+		ctx.clearRect(0,0,800,600);
+
+		// catcher
+		nakovImg.onload = () => {
+			ctx.drawImage(nakovImg, nakov.x, 490);
+		};
+		// salads
+		salataShopskaImg.onload = () => {
+			ctx.drawImage(salataShopskaImg, 200, 0);
+		};
+		salataImg.onload = () => {
+			ctx.drawImage(salataImg, 350, 0);
+		};
+		// alcohol
+		biraImg.onload = () => {
+			ctx.drawImage(biraImg, biraPos.x, biraPos.y);
+		};
+		rakiaImg.onload = () => {
+			ctx.drawImage(rakiaImg, 0, 0);
+		};
+
+
+		// load images
+		biraImg.src = 'images/bira.png';
+		rakiaImg.src = 'images/rakia.png';
+		salataShopskaImg.src = 'images/salata-shopska.png';
+		salataImg.src = 'images/salata.png';
+		nakovImg.src = 'images/nakov.png';
+    }
 }
 
 game();
