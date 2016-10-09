@@ -34,40 +34,68 @@ function game() {
 		startPos: {x: 360, y: 490},
 		currentPos: {x: 360, y: 490},
 		left: false,
-		dimensions: { x: 110, y: 110}
+		dimensions: { x: 110, y: 110},
+		velX: 0,
+		keys: [],
+		maxSpeed: 10
 	};
+
 	let salata = { dimensions: { x: 130, y: 110} };
 	let salataShopska = { dimensions: {x: 130, y: 110} };
 	let bira = { dimensions: {x: 45, y: 110} };
 	let rakia = { dimensions: {x: 35, y: 110} };
 
 	//Constant values
-	let nakovSpeed = 20;
 
-	window.addEventListener('keydown', movingNakov);
+	window.addEventListener("keydown", function (e) {
+		nakov.keys[e.keyCode] = true;
+	});
 
-	function movingNakov(event) {
-		switch (event.code) {
-			case 'ArrowLeft':
-				if (nakov.currentPos.x - nakovSpeed >= 0) {
-					nakov.currentPos.x -= nakovSpeed;
+	window.addEventListener("keyup", function (e) {
+		nakov.keys[e.keyCode] = false;
+	});
+
+	nakovControl();
+	function nakovControl() {
+		movingNakov();
+		function movingNakov() {
+			nakovKey();
+			nakov.currentPos.x += nakov.velX;
+			nakovStop();
+			moveNakov();
+			requestAnimationFrame(movingNakov);
+		}
+		function nakovStop() {
+			if (nakov.currentPos.x < -10) nakov.velX = 0;
+			if (nakov.currentPos.x > 700) nakov.velX = 0;
+		}
+		function nakovKey() {
+			if (nakov.keys[37]) {
+				if (nakov.velX > -nakov.maxSpeed) {
+					if (nakov.currentPos.x - 0.5 < 0) return;
+					if (nakov.velX == 0) nakov.velX -= 2;
+					else nakov.velX -= 0.5;
 					nakov.left = false;
 				}
-				break;
-			case 'ArrowRight':
-				if (nakov.currentPos.x + nakovSpeed <= 700) {
-					nakov.currentPos.x += nakovSpeed;
+			}
+			if (nakov.keys[39]) {
+				if (nakov.velX < nakov.maxSpeed) {
+					if (nakov.currentPos.x - 0.5 > 700) return;
+					if (nakov.velX == 0) nakov.velX += 2;
+					else nakov.velX += 0.5;
 					nakov.left = true;
 				}
-				break;
+			}
+			if (nakov.keys[32])
+				nakov.velX = 0;
 		}
-		requestAnimationFrame(moveNakov);
-	}
 
-	function moveNakov() {
-		ctx.clearRect(nakov.left ? nakov.currentPos.x - nakovSpeed : nakov.currentPos.x + nakovSpeed,
-			nakov.currentPos.y, nakov.dimensions.x + nakovSpeed, nakov.dimensions.y);
-		ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
+		function moveNakov() {
+			// -5 as a safeguard for insufficiently deletion
+			ctx.clearRect(nakov.left ? nakov.currentPos.x - nakov.velX - 5 : nakov.currentPos.x + nakov.velX - 5,
+				nakov.currentPos.y, nakov.dimensions.x + nakov.maxSpeed - nakov.velX, nakov.dimensions.y);
+			ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
+		}
 	}
 
 	draw();
