@@ -43,6 +43,13 @@ function grid() {
 		ctx.stroke();
 		if (col % 5 == 0) ctx.lineWidth = 0.25;
 	}
-
 	ctx.restore();
 }
+
+//
+// Animation support for most browsers
+//
+(function () {
+	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+	window.requestAnimationFrame = requestAnimationFrame;
+})();
