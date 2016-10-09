@@ -30,31 +30,41 @@ function game() {
 	let salataImg = new Image();
 
 	//Objects
-	let nakov = {x:0};
+	let nakov = {x:400};
 
 	//Constant values
 	let nakovSpeed = 10;
 
-	window.addEventListener('keydown', moveingNakov);
+	window.addEventListener('keydown', movingNakov);
 
-	function moveingNakov(event) {
+	function movingNakov(event) {
 		switch (event.code) {
 			case 'ArrowLeft':
-				nakov.x -= nakovSpeed;
+				if (nakov.x - nakovSpeed >= -10)
+					nakov.x -= nakovSpeed;
+
 				break;
 			case 'ArrowRight':
-				nakov.x += nakovSpeed;
+				if (nakov.x + nakovSpeed <= 700)
+					nakov.x += nakovSpeed;
+				break;
 		}
-		draw()
+		moveNakov(nakov.x);
 	}
 
+	function moveNakov(x) {
+		ctx.clearRect(x,490,115,110);
+		ctx.drawImage(nakovImg, x, 490);
+	}
+
+	draw();
 	function draw() {
 		//clearing the frame
 		ctx.clearRect(0,0,800,600);
 
 		// catcher
 		nakovImg.onload = () => {
-			ctx.drawImage(nakovImg, nakov.x, 490);
+			ctx.drawImage(nakovImg, 400, 490);
 		};
 		// salads
 		salataShopskaImg.onload = () => {
@@ -65,7 +75,7 @@ function game() {
 		};
 		// alcohol
 		biraImg.onload = () => {
-			ctx.drawImage(biraImg, biraPos.x, biraPos.y);
+			ctx.drawImage(biraImg, 100, 0);
 		};
 		rakiaImg.onload = () => {
 			ctx.drawImage(rakiaImg, 0, 0);

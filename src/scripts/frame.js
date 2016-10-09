@@ -17,6 +17,9 @@ function res() {
 	ctx.lineCap = 'butt';
 }
 
+//
+// Shows a grid where each cell is 100x100 pixels
+//
 function grid() {
 	ctx.save();
 
