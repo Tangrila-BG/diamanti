@@ -30,24 +30,33 @@ function game() {
 	let salataImg = new Image();
 
 	//Objects
-	let nakov = {x:400, left: false};
+	let nakov = {
+		startPos: {x: 360, y: 490},
+		currentPos: {x: 360, y: 490},
+		left: false,
+		dimensions: { x: 110, y: 110}
+	};
+	let salata = { dimensions: { x: 130, y: 110} };
+	let salataShopska = { dimensions: {x: 130, y: 110} };
+	let bira = { dimensions: {x: 45, y: 110} };
+	let rakia = { dimensions: {x: 35, y: 110} };
 
 	//Constant values
-	let nakovSpeed = 30;
+	let nakovSpeed = 20;
 
 	window.addEventListener('keydown', movingNakov);
 
 	function movingNakov(event) {
 		switch (event.code) {
 			case 'ArrowLeft':
-				if (nakov.x - nakovSpeed >= -10) {
-					nakov.x -= nakovSpeed;
+				if (nakov.currentPos.x - nakovSpeed >= 0) {
+					nakov.currentPos.x -= nakovSpeed;
 					nakov.left = false;
 				}
 				break;
 			case 'ArrowRight':
-				if (nakov.x + nakovSpeed <= 700) {
-					nakov.x += nakovSpeed;
+				if (nakov.currentPos.x + nakovSpeed <= 700) {
+					nakov.currentPos.x += nakovSpeed;
 					nakov.left = true;
 				}
 				break;
@@ -56,8 +65,9 @@ function game() {
 	}
 
 	function moveNakov() {
-		ctx.clearRect(nakov.left ? nakov.x - nakovSpeed : nakov.x + nakovSpeed, 490, 110 + nakovSpeed, 110);
-		ctx.drawImage(nakovImg, nakov.x, 490);
+		ctx.clearRect(nakov.left ? nakov.currentPos.x - nakovSpeed : nakov.currentPos.x + nakovSpeed,
+			nakov.currentPos.y, nakov.dimensions.x + nakovSpeed, nakov.dimensions.y);
+		ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
 	}
 
 	draw();
@@ -67,7 +77,7 @@ function game() {
 
 		// catcher
 		nakovImg.onload = () => {
-			ctx.drawImage(nakovImg, 400, 490);
+			ctx.drawImage(nakovImg, nakov.startPos.x, nakov.startPos.y);
 		};
 		// salads
 		salataShopskaImg.onload = () => {
