@@ -30,31 +30,34 @@ function game() {
 	let salataImg = new Image();
 
 	//Objects
-	let nakov = {x:400};
+	let nakov = {x:400, left: false};
 
 	//Constant values
-	let nakovSpeed = 10;
+	let nakovSpeed = 30;
 
 	window.addEventListener('keydown', movingNakov);
 
 	function movingNakov(event) {
 		switch (event.code) {
 			case 'ArrowLeft':
-				if (nakov.x - nakovSpeed >= -10)
+				if (nakov.x - nakovSpeed >= -10) {
 					nakov.x -= nakovSpeed;
-
+					nakov.left = false;
+				}
 				break;
 			case 'ArrowRight':
-				if (nakov.x + nakovSpeed <= 700)
+				if (nakov.x + nakovSpeed <= 700) {
 					nakov.x += nakovSpeed;
+					nakov.left = true;
+				}
 				break;
 		}
-		moveNakov(nakov.x);
+		requestAnimationFrame(moveNakov);
 	}
 
-	function moveNakov(x) {
-		ctx.clearRect(x,490,115,110);
-		ctx.drawImage(nakovImg, x, 490);
+	function moveNakov() {
+		ctx.clearRect(nakov.left ? nakov.x - nakovSpeed : nakov.x + nakovSpeed, 490, 110 + nakovSpeed, 110);
+		ctx.drawImage(nakovImg, nakov.x, 490);
 	}
 
 	draw();
