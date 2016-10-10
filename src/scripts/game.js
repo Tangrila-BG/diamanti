@@ -152,7 +152,7 @@ function game() {
 		window.requestAnimationFrame(animateSalataShopska);
 	}
 
-
+//kamen besshte tuk
 	draw();
 	function draw() {
 		// catcher
