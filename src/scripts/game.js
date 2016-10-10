@@ -31,15 +31,15 @@ function game() {
 
     function randomCoordinates (startingCoordinates){
         while (startingCoordinates.length < 4) {
-            let randomnumber = Math.ceil(Math.random() * 670);
+            let randomNumber = Math.ceil(Math.random() * 670);
             let found = false;
             for (let i = 0; i < startingCoordinates.length; i++) {
-                if (Math.abs(startingCoordinates[i] - randomnumber) < 120) {
+                if (Math.abs(startingCoordinates[i] - randomNumber) < 120) {
                     found = true;
                     break
                 }
             }
-            if (!found)startingCoordinates[startingCoordinates.length] = randomnumber;
+            if (!found)startingCoordinates[startingCoordinates.length] = randomNumber;
         }
         return startingCoordinates;
     }
@@ -96,17 +96,24 @@ function game() {
             nakov.keys[e.keyCode] = false;
         });
 
-        nakovControl();
-        function nakovControl() {
+		function gameLoop() {
+			cls();
+			animateBira();
+			animateNakov();
+			animateRakia();
+			animateSalata();
+			animateSalataShopska();
+
+			requestAnimationFrame(gameLoop);
+		}
+        function animateNakov() {
             movingNakov();
             function movingNakov() {
                 nakovKey();
                 nakov.currentPos.x += nakov.velX;
                 nakovStop();
-                moveNakov();
-                requestAnimationFrame(movingNakov);
+                drawNakov();
             }
-
             function nakovStop() {
                 if (nakov.currentPos.x < -10) nakov.velX = 0;
                 if (nakov.currentPos.x > 700) nakov.velX = 0;
@@ -133,20 +140,15 @@ function game() {
                     nakov.velX = 0;
             }
 
-            function moveNakov() {
-                // -5 as a safeguard for insufficiently deletion
-                ctx.clearRect(nakov.left ? nakov.currentPos.x - nakov.velX - 5 : nakov.currentPos.x + nakov.velX - 5,
-                    nakov.currentPos.y, nakov.dimensions.x + nakov.maxSpeed - nakov.velX, nakov.dimensions.y);
-                ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
+            function drawNakov() {
+	            ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
             }
         }
 
-        animateBira();
         function animateBira() {
             bira.currentPos.y += bira.velY;
-            ctx.clearRect(bira.currentPos.x, bira.currentPos.y - bira.velY - 0.05, bira.currentPos.x, bira.currentPos.y);
-            ctx.drawImage(biraImg, bira.currentPos.x, bira.currentPos.y);
-            bira.velY += 0.05;
+	        if (bira.velY < 20)
+		        bira.velY += 0.05;
             if (bira.currentPos.y > 600) {
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
@@ -154,15 +156,13 @@ function game() {
                 bira.currentPos.x = startingCoordinates[0];
                 bira.velY = 0;
             }
-            window.requestAnimationFrame(animateBira);
+	        ctx.drawImage(biraImg, bira.currentPos.x, bira.currentPos.y);
         }
 
-        animateRakia();
         function animateRakia() {
             rakia.currentPos.y += rakia.velY;
-            ctx.clearRect(rakia.currentPos.x, rakia.currentPos.y - rakia.velY - 0.05, rakia.currentPos.x, rakia.currentPos.y);
-            ctx.drawImage(rakiaImg, rakia.currentPos.x, rakia.currentPos.y);
-            rakia.velY += 0.05;
+	        if (rakia.velY < 20)
+		        rakia.velY += 0.05;
             if (rakia.currentPos.y > 600) {
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
@@ -170,15 +170,14 @@ function game() {
                 rakia.currentPos.x = startingCoordinates[1];
                 rakia.velY = 0;
             }
-            window.requestAnimationFrame(animateRakia);
+	        ctx.drawImage(rakiaImg, rakia.currentPos.x, rakia.currentPos.y);
         }
 
-        animateSalata();
         function animateSalata() {
             salata.currentPos.y += salata.velY;
-            ctx.clearRect(salata.currentPos.x, salata.currentPos.y - salata.velY - 0.05, salata.currentPos.x, salata.currentPos.y);
-            ctx.drawImage(salataImg, salata.currentPos.x, salata.currentPos.y);
-            salata.velY += 0.05;
+
+	        if (salata.velY < 20)
+		        salata.velY += 0.05;
             if (salata.currentPos.y > 600) {
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
@@ -186,15 +185,14 @@ function game() {
                 salata.currentPos.x = startingCoordinates[2];
                 salata.velY = 0;
             }
-            window.requestAnimationFrame(animateSalata);
+	        ctx.drawImage(salataImg, salata.currentPos.x, salata.currentPos.y);
         }
 
-        animateSalataShopska();
         function animateSalataShopska() {
             salataShopska.currentPos.y += salataShopska.velY;
-            ctx.clearRect(salataShopska.currentPos.x, salataShopska.currentPos.y - salataShopska.velY - 0.05, salataShopska.currentPos.x, salataShopska.currentPos.y);
-            ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
-            salataShopska.velY += 0.05;
+
+	        if (salataShopska.velY < 10)
+		        salataShopska.velY += 0.05;
             if (salataShopska.currentPos.y > 600) {
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
@@ -202,11 +200,10 @@ function game() {
                 salataShopska.currentPos.x = startingCoordinates[3];
                 salataShopska.velY = 0;
             }
-            window.requestAnimationFrame(animateSalataShopska);
+	        ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
         }
-
-
         draw();
+		gameLoop();
         function draw() {
             // catcher
             //clearing the frame
