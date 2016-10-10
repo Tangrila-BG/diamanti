@@ -29,6 +29,13 @@ function game() {
 	let rakiaImg = new Image();
 	let salataImg = new Image();
 
+    let imageSources = [
+        { src: 'images/bira.png' },
+        { src: 'images/rakia.png' },
+        { src: 'images/salata-shopska.png' },
+        { src: 'images/salata.png' },
+    ]
+
 	//Objects
 	let nakov = {
 		startPos: {x: 360, y: 490},
@@ -102,26 +109,32 @@ function game() {
 	function draw() {
 		//clearing the frame
 		ctx.clearRect(0,0,800,600);
-
+        let startingCoordinates = [];
+        while(startingCoordinates.length < 4){
+            let randomnumber=Math.ceil(Math.random()*670)
+            let found=false;
+            for(let i=0;i<startingCoordinates.length;i++){
+                if(Math.abs(startingCoordinates[i]-randomnumber)<120){found=true;break}
+            }
+            if(!found)startingCoordinates[startingCoordinates.length]=randomnumber;
+        }
 		// catcher
 		nakovImg.onload = () => {
 			ctx.drawImage(nakovImg, nakov.startPos.x, nakov.startPos.y);
 		};
-		// salads
-		salataShopskaImg.onload = () => {
-			ctx.drawImage(salataShopskaImg, 200, 0);
-		};
-		salataImg.onload = () => {
-			ctx.drawImage(salataImg, 350, 0);
-		};
-		// alcohol
-		biraImg.onload = () => {
-			ctx.drawImage(biraImg, 100, 0);
-		};
-		rakiaImg.onload = () => {
-			ctx.drawImage(rakiaImg, 0, 0);
-		};
-
+		 salataShopskaImg.onload = () => {
+		 	ctx.drawImage(salataShopskaImg, startingCoordinates[0], 0);
+		 };
+		 salataImg.onload = () => {
+		 	ctx.drawImage(salataImg, startingCoordinates[1], 0);
+		 };
+		 // alcohol
+		 biraImg.onload = () => {
+		 	ctx.drawImage(biraImg, startingCoordinates[2], 0);
+		 };
+		 rakiaImg.onload = () => {
+		 	ctx.drawImage(rakiaImg, startingCoordinates[3], 0);
+		 };
 
 		// load images
 		biraImg.src = 'images/bira.png';
