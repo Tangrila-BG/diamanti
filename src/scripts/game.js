@@ -238,6 +238,24 @@ function game() {
             nakovImg.src = 'images/nakov.png';
         }
 
+      // scoring();
+
+      // function scoring (){
+      //     let x = nakov.currentPos.x - rakia.currentPos.x;
+      //     let y = nakov.currentPos.y - rakia.currentPos.y;
+      //     let distance = Math.sqrt(x*x + y*y);
+      //     if (distance<40) {
+      //         nakov.drunkLevel++;
+      //     }
+      //     console.log(nakov.drunkLevel);
+      // }
+
+        function restartGame (){
+            if (nakov.drunkLevel>=5){
+                game();
+            }
+        }
+
 }
 
 game();
