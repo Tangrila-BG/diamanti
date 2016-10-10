@@ -40,10 +40,26 @@ function game() {
 		maxSpeed: 10
 	};
 
-	let salata = { dimensions: { x: 130, y: 110} };
+	let salata = {
+		startPos: {x:150, y: 110},
+		dimensions: { x: 130, y: 110},
+		currentPos: {x:150, y:110},
+	};
 	let salataShopska = { dimensions: {x: 130, y: 110} };
-	let bira = { dimensions: {x: 45, y: 110} };
-	let rakia = { dimensions: {x: 35, y: 110} };
+	let bira = {
+		startPos: {x:100, y: 110},
+		dimensions: {x: 45, y: 110},
+		currentPos: {x:100, y:110},
+		velY: 0,
+		speed: 10
+	};
+	let rakia = {
+		startPos: {x:45, y: 110},
+		dimensions: {x: 35, y: 110},
+		currentPos: {x:45, y:110},
+		velY: 0,
+		speed: 10
+	};
 
 	//Constant values
 
@@ -97,31 +113,47 @@ function game() {
 			ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
 		}
 	}
+	animateBira();
+	function animateBira() {
+		bira.currentPos.y+=bira.velY;
+		ctx.clearRect(bira.currentPos.x,bira.currentPos.y - bira.velY-0.025,bira.currentPos.x,bira.currentPos.y);
+		ctx.drawImage(biraImg, bira.currentPos.x, bira.currentPos.y);
+		bira.velY+=0.05;
+		window.requestAnimationFrame(animateBira);
+	}
+	animateRakia();
+	function animateRakia() {
+		rakia.currentPos.y+=rakia.velY;
+		ctx.clearRect(rakia.currentPos.x,rakia.currentPos.y - rakia.velY-0.025,rakia.currentPos.x,rakia.currentPos.y);
+		ctx.drawImage(rakiaImg, rakia.currentPos.x, rakia.currentPos.y);
+		rakia.velY+=0.05;
+		window.requestAnimationFrame(animateRakia);
+	}
+
 
 	draw();
 	function draw() {
+		// catcher
 		//clearing the frame
 		ctx.clearRect(0,0,800,600);
-
-		// catcher
 		nakovImg.onload = () => {
+			// salads
 			ctx.drawImage(nakovImg, nakov.startPos.x, nakov.startPos.y);
 		};
-		// salads
+
 		salataShopskaImg.onload = () => {
+			// alcohol
 			ctx.drawImage(salataShopskaImg, 200, 0);
 		};
 		salataImg.onload = () => {
 			ctx.drawImage(salataImg, 350, 0);
 		};
-		// alcohol
 		biraImg.onload = () => {
-			ctx.drawImage(biraImg, 100, 0);
+			ctx.drawImage(biraImg, bira.startPos.x, bira.startPos.y);
 		};
 		rakiaImg.onload = () => {
-			ctx.drawImage(rakiaImg, 0, 0);
+			ctx.drawImage(rakiaImg, rakia.startPos.x, rakia.startPos.y);
 		};
-
 
 		// load images
 		biraImg.src = 'images/bira.png';
@@ -129,7 +161,7 @@ function game() {
 		salataShopskaImg.src = 'images/salata-shopska.png';
 		salataImg.src = 'images/salata.png';
 		nakovImg.src = 'images/nakov.png';
-    }
+	}
 }
 
 game();
