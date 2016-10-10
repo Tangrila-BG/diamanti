@@ -41,22 +41,28 @@ function game() {
 	};
 
 	let salata = {
-		startPos: {x:150, y: 110},
+		startPos: {x:150, y:Math.min(-110,-Math.random()* 500)},
 		dimensions: { x: 130, y: 110},
-		currentPos: {x:150, y:110},
+		currentPos: {x:150, y:Math.min(-110,-Math.random()* 500)},
+		velY: 0
 	};
-	let salataShopska = { dimensions: {x: 130, y: 110} };
+	let salataShopska = {
+		startPos: {x:150, y:Math.min(-110,-Math.random()* 500)},
+		dimensions: {x: 130, y: 110},
+		currentPos: {x:150, y:Math.min(-110,-Math.random()* 500)},
+		velY: 0
+	};
 	let bira = {
-		startPos: {x:100, y: 110},
+		startPos: {x:100, y: Math.min(-110,-Math.random()* 500)},
 		dimensions: {x: 45, y: 110},
-		currentPos: {x:100, y:110},
+		currentPos: {x:100, y:Math.min(-110,-Math.random()* 500)},
 		velY: 0,
 		speed: 10
 	};
 	let rakia = {
-		startPos: {x:45, y: 110},
+		startPos: {x:45, y:Math.min(-110,-Math.random()* 500)},
 		dimensions: {x: 35, y: 110},
-		currentPos: {x:45, y:110},
+		currentPos: {x:45, y:Math.min(-110,-Math.random()* 500)},
 		velY: 0,
 		speed: 10
 	};
@@ -129,6 +135,22 @@ function game() {
 		rakia.velY+=0.05;
 		window.requestAnimationFrame(animateRakia);
 	}
+	animateSalata();
+	function animateSalata() {
+		salata.currentPos.y+=salata.velY;
+		ctx.clearRect(salata.currentPos.x,salata.currentPos.y - salata.velY-0.025,salata.currentPos.x,salata.currentPos.y);
+		ctx.drawImage(salataImg, salata.currentPos.x, salata.currentPos.y);
+		salata.velY+=0.05;
+		window.requestAnimationFrame(animateSalata);
+	}
+	animateSalataShopska();
+	function animateSalataShopska() {
+		salataShopska.currentPos.y+=salataShopska.velY;
+		ctx.clearRect(salataShopska.currentPos.x,salataShopska.currentPos.y - salataShopska.velY-0.025,salataShopska.currentPos.x,salataShopska.currentPos.y);
+		ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
+		salataShopska.velY+=0.05;
+		window.requestAnimationFrame(animateSalataShopska);
+	}
 
 
 	draw();
@@ -143,10 +165,10 @@ function game() {
 
 		salataShopskaImg.onload = () => {
 			// alcohol
-			ctx.drawImage(salataShopskaImg, 200, 0);
+			ctx.drawImage(salataShopskaImg, salataShopska.startPos.x, salataShopska.startPos.y);
 		};
 		salataImg.onload = () => {
-			ctx.drawImage(salataImg, 350, 0);
+			ctx.drawImage(salataImg, salata.startPos.x, salata.startPos.y);
 		};
 		biraImg.onload = () => {
 			ctx.drawImage(biraImg, bira.startPos.x, bira.startPos.y);
