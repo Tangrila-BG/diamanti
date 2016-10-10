@@ -111,8 +111,7 @@ function game() {
 		ctx.clearRect(0,0,800,600);
         let startingCoordinates = [];
         while(startingCoordinates.length < 4){
-            
-            let randomnumber=Math.ceil(Math.random()*670)
+            let randomnumber=Math.ceil(Math.random()*670);
             let found=false;
             for(let i=0;i<startingCoordinates.length;i++){
                 if(Math.abs(startingCoordinates[i]-randomnumber)<120){found=true;break}
