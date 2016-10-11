@@ -78,10 +78,24 @@ function game() {
         velY: 0,
         speed: 10
     };
+    let bira1 = {
+        startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
+        dimensions: {x: 45, y: 110},
+        currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
+        velY: 0,
+        speed: 10
+    };
     let rakia = {
         startPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 35, y: 110},
         currentPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
+        velY: 0,
+        speed: 10
+    };
+    let rakia1 = {
+        startPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
+        dimensions: {x: 35, y: 110},
+        currentPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
         speed: 10
     };
@@ -103,6 +117,8 @@ function game() {
 			animateRakia();
 			animateSalata();
 			animateSalataShopska();
+            animateBira1();
+            animateRakia1();
 
 			requestAnimationFrame(gameLoop);
 		}
@@ -149,6 +165,8 @@ function game() {
             bira.currentPos.y += bira.velY;
 	        if (bira.velY < 20)
 		        bira.velY += 0.05;
+            //if (bira.currentPos.y>300)
+            //    animateBira1();
             if (bira.currentPos.y > 600) {
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
@@ -157,6 +175,20 @@ function game() {
                 bira.velY = 0;
             }
 	        ctx.drawImage(biraImg, bira.currentPos.x, bira.currentPos.y);
+        }
+
+        function animateBira1() {
+            bira1.currentPos.y += bira1.velY;
+            if (bira1.velY < 20)
+                bira1.velY += 0.05;
+            if (bira1.currentPos.y > 600) {
+                startingCoordinates = [];
+                startingCoordinates = randomCoordinates(startingCoordinates);
+                bira1.currentPos.y = Math.min(-110, -Math.random() * 300);
+                bira1.currentPos.x = startingCoordinates[3];
+                bira1.velY = 0;
+            }
+            ctx.drawImage(biraImg, bira1.currentPos.x, bira1.currentPos.y);
         }
 
         function animateRakia() {
@@ -171,7 +203,23 @@ function game() {
                 rakia.velY = 0;
             }
 	        ctx.drawImage(rakiaImg, rakia.currentPos.x, rakia.currentPos.y);
+            scoring();
+
         }
+
+    function animateRakia1() {
+        rakia1.currentPos.y += rakia1.velY;
+        if (rakia1.velY < 20)
+            rakia1.velY += 0.05;
+        if (rakia1.currentPos.y > 600) {
+            startingCoordinates = [];
+            startingCoordinates = randomCoordinates(startingCoordinates);
+            rakia1.currentPos.y = Math.min(-110, -Math.random() * 300);
+            rakia1.currentPos.x = startingCoordinates[1];
+            rakia1.velY = 0;
+        }
+        ctx.drawImage(rakiaImg, rakia1.currentPos.x, rakia1.currentPos.y);
+    }
 
         function animateSalata() {
             salata.currentPos.y += salata.velY;
@@ -223,8 +271,14 @@ function game() {
             biraImg.onload = () => {
                 ctx.drawImage(biraImg, bira.startPos.x, bira.startPos.y);
             };
+            biraImg.onload = () => {
+                ctx.drawImage(biraImg, bira1.startPos.x, bira1.startPos.y);
+            };
             rakiaImg.onload = () => {
                 ctx.drawImage(rakiaImg, rakia.startPos.x, rakia.startPos.y);
+            };
+            rakiaImg.onload = () => {
+                ctx.drawImage(rakiaImg, rakia1.startPos.x, rakia1.startPos.y);
             };
 
             // load images
@@ -237,22 +291,21 @@ function game() {
 
       // scoring();
 
-      // function scoring (){
-      //     let x = nakov.currentPos.x - rakia.currentPos.x;
-      //     let y = nakov.currentPos.y - rakia.currentPos.y;
-      //     let distance = Math.sqrt(x*x + y*y);
-      //     if (distance<40) {
-      //         nakov.drunkLevel++;
-      //     }
-      //     console.log(nakov.drunkLevel);
-      // }
+      function scoring (){
+           let x = nakov.currentPos.x - rakia.currentPos.x;
+           let y = nakov.currentPos.y - rakia.currentPos.y;
+           let distance = Math.sqrt(x*x + y*y);
+           if (distance<40) {
+               nakov.drunkLevel++;
+           }
+           console.log(nakov.drunkLevel);
+       }
 
         function restartGame (){
             if (nakov.drunkLevel>=5){
                 game();
             }
         }
-
 }
 
 game();
