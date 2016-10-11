@@ -64,14 +64,16 @@ function game() {
         startPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 130, y: 110},
         currentPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
-        velY: 0
+        velY: 0,
+        weight: -0.2
     };
     objects.push(salata);
     let salataShopska = {
         startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 130, y: 110},
         currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
-        velY: 0
+        velY: 0,
+        weight: -0.2
     };
     objects.push(salataShopska);
     let bira = {
@@ -79,7 +81,8 @@ function game() {
         dimensions: {x: 45, y: 110},
         currentPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
-        speed: 10
+        speed: 10,
+        weight: 0.5
     };
     objects.push(bira);
     let bira1 = {
@@ -87,7 +90,8 @@ function game() {
         dimensions: {x: 45, y: 110},
         currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
-        speed: 10
+        speed: 10,
+        weight: 0.5
     };
     objects.push(bira1);
     let rakia = {
@@ -95,7 +99,8 @@ function game() {
         dimensions: {x: 35, y: 110},
         currentPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
-        speed: 10
+        speed: 10,
+        weight: 0.8
     };
     objects.push(rakia);
     let rakia1 = {
@@ -103,7 +108,8 @@ function game() {
         dimensions: {x: 35, y: 110},
         currentPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
-        speed: 10
+        speed: 10,
+        weight: 0.8
     };
     objects.push(rakia1);
 
@@ -194,7 +200,9 @@ function game() {
             let x = nakov.currentPos.x - currentObject.currentPos.x;
             let y = nakov.currentPos.y - currentObject.currentPos.y;
             let distance = Math.sqrt(x*x + y*y);
-            if (distance<50){
+            if (distance<80){
+                nakov.drunkLevel+=currentObject.weight;
+                console.log(nakov.drunkLevel);
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
                 currentObject.currentPos.y = Math.min(-110, -Math.random() * 300);
@@ -351,5 +359,4 @@ function game() {
             }
         }
 }
-
 game();
