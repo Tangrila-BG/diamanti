@@ -48,6 +48,7 @@ function game() {
     startingCoordinates = randomCoordinates(startingCoordinates);
 
     //Objects
+    let objects = [];
     let nakov = {
         startPos: {x: 360, y: 490},
         currentPos: {x: 360, y: 490},
@@ -65,12 +66,14 @@ function game() {
         currentPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
         velY: 0
     };
+    objects.push(salata);
     let salataShopska = {
         startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 130, y: 110},
         currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         velY: 0
     };
+    objects.push(salataShopska);
     let bira = {
         startPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 45, y: 110},
@@ -78,6 +81,7 @@ function game() {
         velY: 0,
         speed: 10
     };
+    objects.push(bira);
     let bira1 = {
         startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 45, y: 110},
@@ -85,6 +89,7 @@ function game() {
         velY: 0,
         speed: 10
     };
+    objects.push(bira1);
     let rakia = {
         startPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 35, y: 110},
@@ -92,6 +97,7 @@ function game() {
         velY: 0,
         speed: 10
     };
+    objects.push(rakia);
     let rakia1 = {
         startPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 35, y: 110},
@@ -99,6 +105,7 @@ function game() {
         velY: 0,
         speed: 10
     };
+    objects.push(rakia1);
 
         //Constant values
 
@@ -112,13 +119,14 @@ function game() {
 
 		function gameLoop() {
 			cls();
-			animateBira();
+			//animateBira();
+            animate(bira, biraImg, 1);
 			animateNakov();
-			animateRakia();
-			animateSalata();
-			animateSalataShopska();
-            animateBira1();
-            animateRakia1();
+			animate(rakia, rakiaImg,2);
+			animate(salata, salataImg,3);
+			animate(salataShopska, salataShopskaImg,0);
+            animate(bira1, biraImg, 3);
+            animate(rakia1, rakiaImg,1);
 
 			requestAnimationFrame(gameLoop);
 		}
@@ -160,96 +168,113 @@ function game() {
 	            ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
             }
         }
-
-        function animateBira() {
-            bira.currentPos.y += bira.velY;
-	        if (bira.velY < 20)
-		        bira.velY += 0.05;
+        function animate (currentObj, image, index){
+            currentObj.currentPos.y += currentObj.velY;
+            if (currentObj.velY < 20)
+                currentObj.velY += 0.05;
             //if (bira.currentPos.y>300)
             //    animateBira1();
-            if (bira.currentPos.y > 600) {
+            if (currentObj.currentPos.y > 600) {
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
-                bira.currentPos.y = Math.min(-110, -Math.random() * 300);
-                bira.currentPos.x = startingCoordinates[0];
-                bira.velY = 0;
+                currentObj.currentPos.y = Math.min(-110, -Math.random() * 300);
+                currentObj.currentPos.x = startingCoordinates[index];
+                currentObj.velY = 0;
             }
-	        ctx.drawImage(biraImg, bira.currentPos.x, bira.currentPos.y);
+            ctx.drawImage(image, currentObj.currentPos.x, currentObj.currentPos.y);
         }
 
-        function animateBira1() {
-            bira1.currentPos.y += bira1.velY;
-            if (bira1.velY < 20)
-                bira1.velY += 0.05;
-            if (bira1.currentPos.y > 600) {
-                startingCoordinates = [];
-                startingCoordinates = randomCoordinates(startingCoordinates);
-                bira1.currentPos.y = Math.min(-110, -Math.random() * 300);
-                bira1.currentPos.x = startingCoordinates[3];
-                bira1.velY = 0;
-            }
-            ctx.drawImage(biraImg, bira1.currentPos.x, bira1.currentPos.y);
-        }
 
-        function animateRakia() {
-            rakia.currentPos.y += rakia.velY;
-	        if (rakia.velY < 20)
-		        rakia.velY += 0.05;
-            if (rakia.currentPos.y > 600) {
-                startingCoordinates = [];
-                startingCoordinates = randomCoordinates(startingCoordinates);
-                rakia.currentPos.y = Math.min(-110, -Math.random() * 300);
-                rakia.currentPos.x = startingCoordinates[1];
-                rakia.velY = 0;
-            }
-	        ctx.drawImage(rakiaImg, rakia.currentPos.x, rakia.currentPos.y);
-            scoring();
 
-        }
+       ////function animateBira() {
+       //    bira.currentPos.y += bira.velY;
+	   //    if (bira.velY < 20)
+	//        bira.velY += 0.05;
+       //    //if (bira.currentPos.y>300)
+       //    //    animateBira1();
+       //    if (bira.currentPos.y > 600) {
+       //        startingCoordinates = [];
+       //        startingCoordinates = randomCoordinates(startingCoordinates);
+       //        bira.currentPos.y = Math.min(-110, -Math.random() * 300);
+       //        bira.currentPos.x = startingCoordinates[0];
+       //        bira.velY = 0;
+       //    }
+	   //    ctx.drawImage(biraImg, bira.currentPos.x, bira.currentPos.y);
+       //}
 
-    function animateRakia1() {
-        rakia1.currentPos.y += rakia1.velY;
-        if (rakia1.velY < 20)
-            rakia1.velY += 0.05;
-        if (rakia1.currentPos.y > 600) {
-            startingCoordinates = [];
-            startingCoordinates = randomCoordinates(startingCoordinates);
-            rakia1.currentPos.y = Math.min(-110, -Math.random() * 300);
-            rakia1.currentPos.x = startingCoordinates[1];
-            rakia1.velY = 0;
-        }
-        ctx.drawImage(rakiaImg, rakia1.currentPos.x, rakia1.currentPos.y);
-    }
+//      function animateBira1() {
+//          bira1.currentPos.y += bira1.velY;
+//          if (bira1.velY < 20)
+//              bira1.velY += 0.05;
+//          if (bira1.currentPos.y > 600) {
+//              startingCoordinates = [];
+//              startingCoordinates = randomCoordinates(startingCoordinates);
+//              bira1.currentPos.y = Math.min(-110, -Math.random() * 300);
+//              bira1.currentPos.x = startingCoordinates[3];
+//              bira1.velY = 0;
+//          }
+//          ctx.drawImage(biraImg, bira1.currentPos.x, bira1.currentPos.y);
+//      }
 
-        function animateSalata() {
-            salata.currentPos.y += salata.velY;
+//      function animateRakia() {
+//          rakia.currentPos.y += rakia.velY;
+//	        if (rakia.velY < 20)
+//		        rakia.velY += 0.05;
+//          if (rakia.currentPos.y > 600) {
+//              startingCoordinates = [];
+//              startingCoordinates = randomCoordinates(startingCoordinates);
+//              rakia.currentPos.y = Math.min(-110, -Math.random() * 300);
+//              rakia.currentPos.x = startingCoordinates[1];
+//              rakia.velY = 0;
+//          }
+//	        ctx.drawImage(rakiaImg, rakia.currentPos.x, rakia.currentPos.y);
+//          scoring();
 
-	        if (salata.velY < 20)
-		        salata.velY += 0.05;
-            if (salata.currentPos.y > 600) {
-                startingCoordinates = [];
-                startingCoordinates = randomCoordinates(startingCoordinates);
-                salata.currentPos.y = Math.min(-110, -Math.random() * 700);
-                salata.currentPos.x = startingCoordinates[2];
-                salata.velY = 0;
-            }
-	        ctx.drawImage(salataImg, salata.currentPos.x, salata.currentPos.y);
-        }
+////      }
 
-        function animateSalataShopska() {
-            salataShopska.currentPos.y += salataShopska.velY;
+//   function animateRakia1() {
+//       rakia1.currentPos.y += rakia1.velY;
+//       if (rakia1.velY < 20)
+//           rakia1.velY += 0.05;
+//       if (rakia1.currentPos.y > 600) {
+//           startingCoordinates = [];
+//           startingCoordinates = randomCoordinates(startingCoordinates);
+//           rakia1.currentPos.y = Math.min(-110, -Math.random() * 300);
+//           rakia1.currentPos.x = startingCoordinates[1];
+//           rakia1.velY = 0;
+//       }
+//       ctx.drawImage(rakiaImg, rakia1.currentPos.x, rakia1.currentPos.y);
+//   }
 
-	        if (salataShopska.velY < 10)
-		        salataShopska.velY += 0.05;
-            if (salataShopska.currentPos.y > 600) {
-                startingCoordinates = [];
-                startingCoordinates = randomCoordinates(startingCoordinates);
-                salataShopska.currentPos.y = Math.min(-110, -Math.random() * 700);
-                salataShopska.currentPos.x = startingCoordinates[3];
-                salataShopska.velY = 0;
-            }
-	        ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
-        }
+//       function animateSalata() {
+//           salata.currentPos.y += salata.velY;
+
+//	        if (salata.velY < 20)
+//		        salata.velY += 0.05;
+//           if (salata.currentPos.y > 600) {
+//               startingCoordinates = [];
+//               startingCoordinates = randomCoordinates(startingCoordinates);
+//               salata.currentPos.y = Math.min(-110, -Math.random() * 700);
+//               salata.currentPos.x = startingCoordinates[2];
+//               salata.velY = 0;
+//           }
+//	        ctx.drawImage(salataImg, salata.currentPos.x, salata.currentPos.y);
+//       }
+
+//       function animateSalataShopska() {
+//           salataShopska.currentPos.y += salataShopska.velY;
+
+//	        if (salataShopska.velY < 10)
+//		        salataShopska.velY += 0.05;
+//           if (salataShopska.currentPos.y > 600) {
+//               startingCoordinates = [];
+//               startingCoordinates = randomCoordinates(startingCoordinates);
+//               salataShopska.currentPos.y = Math.min(-110, -Math.random() * 700);
+//               salataShopska.currentPos.x = startingCoordinates[3];
+//               salataShopska.velY = 0;
+//           }
+//	        ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
+//       }
         draw();
 		gameLoop();
         function draw() {
