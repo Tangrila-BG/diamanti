@@ -119,13 +119,19 @@ function game() {
 
 		function gameLoop() {
 			cls();
-			//animateBira();
+            animateNakov();
+            //animateBira();
+            update(bira, 2);
             animate(bira, biraImg, 1);
-			animateNakov();
+            update(rakia,1);
 			animate(rakia, rakiaImg,2);
+            update(salata,3);
 			animate(salata, salataImg,3);
+            update(salataShopska, 0);
 			animate(salataShopska, salataShopskaImg,0);
+            update(bira1, 1);
             animate(bira1, biraImg, 3);
+            update(rakia1, 2);
             animate(rakia1, rakiaImg,1);
 
 			requestAnimationFrame(gameLoop);
@@ -182,6 +188,19 @@ function game() {
                 currentObj.velY = 0;
             }
             ctx.drawImage(image, currentObj.currentPos.x, currentObj.currentPos.y);
+        }
+
+        function update (currentObject,index){
+            let x = nakov.currentPos.x - currentObject.currentPos.x;
+            let y = nakov.currentPos.y - currentObject.currentPos.y;
+            let distance = Math.sqrt(x*x + y*y);
+            if (distance<50){
+                startingCoordinates = [];
+                startingCoordinates = randomCoordinates(startingCoordinates);
+                currentObject.currentPos.y = Math.min(-110, -Math.random() * 300);
+                currentObject.currentPos.x = startingCoordinates[index];
+                currentObject.velY = 0;
+            }
         }
 
 
