@@ -22,12 +22,21 @@
 //
 
 function game() {
+    ctx.fillText('Press "S" to start.',380,300)
     // A Way of loading the images
     let nakovImg = new Image();
     let salataShopskaImg = new Image();
     let biraImg = new Image();
     let rakiaImg = new Image();
     let salataImg = new Image();
+    biraImg.src = 'images/bira.png';
+    rakiaImg.src = 'images/rakia.png';
+    salataShopskaImg.src = 'images/salata-shopska.png';
+    salataImg.src = 'images/salata.png';
+    nakovImg.src = 'images/nakov.png';
+    let isPaused = false;
+    let isStarted = false;
+
 
     function randomCoordinates (startingCoordinates){
         while (startingCoordinates.length < 4) {
@@ -61,7 +70,7 @@ function game() {
     };
 
     let salata = {
-        startPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
+        //startPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 130, y: 110},
         currentPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
@@ -69,7 +78,7 @@ function game() {
     };
     objects.push(salata);
     let salataShopska = {
-        startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
+        //startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 130, y: 110},
         currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
@@ -77,45 +86,58 @@ function game() {
     };
     objects.push(salataShopska);
     let bira = {
-        startPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
+        //startPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 45, y: 110},
         currentPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
         speed: 10,
-        weight: 0.5
+        weight: 0.2
     };
     objects.push(bira);
     let bira1 = {
-        startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
+        //startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 45, y: 110},
         currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
         speed: 10,
-        weight: 0.5
+        weight: 0.2
     };
     objects.push(bira1);
     let rakia = {
-        startPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
+        //startPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 35, y: 110},
         currentPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
         speed: 10,
-        weight: 0.8
+        weight: 0.3
     };
     objects.push(rakia);
     let rakia1 = {
-        startPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
+        //startPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 35, y: 110},
         currentPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
         velY: 0,
         speed: 10,
-        weight: 0.8
+        weight: 0.3
     };
     objects.push(rakia1);
 
         //Constant values
 
         window.addEventListener("keydown", function (e) {
+            //alert(e.keyCode);
+            if (e.keyCode == 80){
+                if (isPaused){
+                    isPaused=false;
+                    //gameLoop();
+                }else{
+                    isPaused = true;
+                }
+
+            }
+            if (e.keyCode == 83){
+                isStarted = true;
+            }
             nakov.keys[e.keyCode] = true;
         });
 
@@ -124,23 +146,32 @@ function game() {
         });
 
 		function gameLoop() {
-			cls();
-            animateNakov();
-            //animateBira();
-            update(bira, 2);
-            animate(bira, biraImg, 1);
-            update(rakia,1);
-			animate(rakia, rakiaImg,2);
-            update(salata,3);
-			animate(salata, salataImg,3);
-            update(salataShopska, 0);
-			animate(salataShopska, salataShopskaImg,0);
-            update(bira1, 1);
-            animate(bira1, biraImg, 3);
-            update(rakia1, 2);
-            animate(rakia1, rakiaImg,1);
+		    if (isStarted && !isPaused) {
+                cls();
+                animateNakov();
+                update(bira, 2);
+                animate(bira, biraImg, 1);
+                update(rakia, 1);
+                animate(rakia, rakiaImg, 2);
+                update(salata, 3);
+                animate(salata, salataImg, 3);
+                update(salataShopska, 0);
+                animate(salataShopska, salataShopskaImg, 0);
+                update(bira1, 1);
+                animate(bira1, biraImg, 3);
+                update(rakia1, 2);
+                animate(rakia1, rakiaImg, 1);
+                draw();
+                //restartGame();
 
-			requestAnimationFrame(gameLoop);
+            }
+            if (isPaused) {
+                ctx.fillText('Paused',100,100);
+            }
+            if (nakov.drunkLevel>=5){
+                restartGame();
+            }
+            requestAnimationFrame(gameLoop);
 		}
         function animateNakov() {
             movingNakov();
@@ -193,7 +224,7 @@ function game() {
                 currentObj.currentPos.x = startingCoordinates[index];
                 currentObj.velY = 0;
             }
-            ctx.drawImage(image, currentObj.currentPos.x, currentObj.currentPos.y);
+            //ctx.drawImage(image, currentObj.currentPos.x, currentObj.currentPos.y);
         }
 
         function update (currentObject,index){
@@ -302,44 +333,35 @@ function game() {
 //           }
 //	        ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
 //       }
-        draw();
+
 		gameLoop();
-        function draw() {
-            // catcher
-            //clearing the frame
-            ctx.clearRect(0, 0, 800, 600);
-            nakovImg.onload = () => {
-                // salads
-                ctx.drawImage(nakovImg, nakov.startPos.x, nakov.startPos.y);
-            };
+    function draw() {
+        // catcher
+        //clearing the frame
+        ctx.clearRect(0, 0, 800, 600);
 
-            salataShopskaImg.onload = () => {
-                // alcohol
-                ctx.drawImage(salataShopskaImg, salataShopska.startPos.x, salataShopska.startPos.y);
-            };
-            salataImg.onload = () => {
-                ctx.drawImage(salataImg, salata.startPos.x, salata.startPos.y);
-            };
-            biraImg.onload = () => {
-                ctx.drawImage(biraImg, bira.startPos.x, bira.startPos.y);
-            };
-            biraImg.onload = () => {
-                ctx.drawImage(biraImg, bira1.startPos.x, bira1.startPos.y);
-            };
-            rakiaImg.onload = () => {
-                ctx.drawImage(rakiaImg, rakia.startPos.x, rakia.startPos.y);
-            };
-            rakiaImg.onload = () => {
-                ctx.drawImage(rakiaImg, rakia1.startPos.x, rakia1.startPos.y);
-            };
+        // salads
+        ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
 
-            // load images
-            biraImg.src = 'images/bira.png';
-            rakiaImg.src = 'images/rakia.png';
-            salataShopskaImg.src = 'images/salata-shopska.png';
-            salataImg.src = 'images/salata.png';
-            nakovImg.src = 'images/nakov.png';
-        }
+        ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
+
+        ctx.drawImage(salataImg, salata.currentPos.x, salata.currentPos.y);
+
+        ctx.drawImage(biraImg, bira.currentPos.x, bira.currentPos.y);
+
+
+        ctx.drawImage(biraImg, bira1.currentPos.x, bira1.currentPos.y);
+
+
+        ctx.drawImage(rakiaImg, rakia.currentPos.x, rakia.currentPos.y);
+
+
+        ctx.drawImage(rakiaImg, rakia1.currentPos.x, rakia1.currentPos.y);
+
+
+        // load images
+
+    }
 
       // scoring();
 
@@ -354,9 +376,9 @@ function game() {
        }
 
         function restartGame (){
-            if (nakov.drunkLevel>=5){
-                game();
-            }
+            nakov.drunkLevel = 0;
+
         }
+
 }
 game();
