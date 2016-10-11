@@ -163,7 +163,6 @@ function game() {
                 animate(rakia1, rakiaImg, 1);
                 draw();
                 //restartGame();
-
             }
             if (isPaused) {
                 ctx.fillText('Paused',100,100);
@@ -377,7 +376,23 @@ function game() {
 
         function restartGame (){
             nakov.drunkLevel = 0;
-
+            bira.currentPos.x = startingCoordinates[0];
+            bira.currentPos.y = Math.min(-110, -Math.random() * 300);
+            bira1.currentPos.x = startingCoordinates[1];
+            bira1.currentPos.y = Math.min(-110, -Math.random() * 300);
+            rakia.currentPos.x = startingCoordinates[2];
+            rakia.currentPos.y = Math.min(-110, -Math.random() * 300);
+            rakia1.currentPos.x = startingCoordinates[1];
+            rakia1.currentPos.y = Math.min(-110, -Math.random() * 300);
+            salata.currentPos.x = startingCoordinates[3];
+            salata.currentPos.y = Math.min(-110, -Math.random() * 300);
+            salataShopska.currentPos.x = startingCoordinates[0];
+            salataShopska.currentPos.y = Math.min(-110, -Math.random() * 300);
+            nakov.startPos.x = 360;
+            nakov.startPos.y = 490;
+            ctx.fillText("Tи си пиян\nPress 's' to restart!", 100,100);
+            isPaused = false;
+            isStarted = false;
         }
 
 }
