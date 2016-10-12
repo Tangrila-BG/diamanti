@@ -70,8 +70,6 @@ function game() {
         maxSpeed: 10
     };
 
-
-
     let salata = {
         //startPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
         dimensions: {x: 130, y: 110},
@@ -151,7 +149,7 @@ function game() {
     function drawScore()
     {
         ctx.font = "24px Times New Roman";
-        ctx.fillText("Drunk level: " + nakov.drunkLevel, 20, 30);
+        ctx.fillText("Drunk level: " + nakov.drunkLevel.toFixed(2), 20, 30);
     }
 
     function gameLoop() {
@@ -177,7 +175,7 @@ function game() {
             if (isPaused) {
                 ctx.fillText('Paused',100,100);
             }
-            if (nakov.drunkLevel>=1){
+            if (nakov.drunkLevel>=5){
                 restartGame();
             }
             requestAnimationFrame(gameLoop);
@@ -242,7 +240,8 @@ function game() {
             let distance = Math.sqrt(x*x + y*y);
             if (distance<80){
                 nakov.drunkLevel+=currentObject.weight;
-                console.log(nakov.drunkLevel);
+                nakov.drunkLevel = Math.max(0, nakov.drunkLevel);
+               // console.log(nakov.drunkLevel);
                 startingCoordinates = [];
                 startingCoordinates = randomCoordinates(startingCoordinates);
                 currentObject.currentPos.y = Math.min(-110, -Math.random() * 300);
@@ -381,6 +380,7 @@ function game() {
            if (distance<40) {
                nakov.drunkLevel++;
            }
+           nakov.drunkLevel = Math.max(0, nakov.drunkLevel);
            console.log(nakov.drunkLevel);
        }
 
