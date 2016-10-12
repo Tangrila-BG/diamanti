@@ -179,7 +179,7 @@ function game() {
 			timer();
 		}
 		if (isPaused) {
-			ctx.fillText('Paused', 100, 100);
+			ctx.fillText('Paused', canvas.width - 85, 60);
 		}
 		if (nakov.drunkLevel >= 1) {
 			restartGame();
@@ -277,13 +277,26 @@ function game() {
 		nakov.startPos.x = 360;
 		nakov.startPos.y = 490;
 		nakov.drankBottles = 1;
-		ctx.fillText("Nakov got drunk again.\nPress 's' to restart!", 100, 100);
+		msg();
 		isPaused = false;
 		isStarted = false;
 		elapsedTime = 0;
 		clearInterval(gameTimer);
 		gameTimer = null;
 		ctx.drawImage(diamantiImg, 200, 200);
+		function msg() {
+			ctx.save();
+			ctx.font="26px Times New Roman";
+			ctx.shadowColor="black";
+			ctx.shadowBlur=7;
+			ctx.lineWidth=5;
+			ctx.strokeText("Nakov got drunk again.\nPress 's' to restart!", 200, 100);
+			ctx.shadowBlur=0;
+			ctx.fillStyle="white";
+			ctx.fillText("Nakov got drunk again.\nPress 's' to restart!", 200, 100);
+			ctx.fillText("Nakov got drunk again.\nPress 's' to restart!", 200, 100);
+			ctx.restore();
+		}
 	}
 
 	function score() {
