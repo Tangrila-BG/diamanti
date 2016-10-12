@@ -19,10 +19,11 @@
 // bira.png - 45x110 ; rakia.png - 35x110 ;
 // salata.png - 130x110 ; salata-shopska.png - 130x110
 // nakov.png - 110x110
-//
+
+
 
 function game() {
-    ctx.fillText('Press "S" to start.',380,300)
+    ctx.fillText('Press "S" to start.',380,300);
     // A Way of loading the images
     let nakovImg = new Image();
     let salataShopskaImg = new Image();
@@ -68,6 +69,8 @@ function game() {
         drunkLevel: 0,
         maxSpeed: 10
     };
+
+
 
     let salata = {
         //startPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
@@ -145,7 +148,13 @@ function game() {
             nakov.keys[e.keyCode] = false;
         });
 
-		function gameLoop() {
+    function drawScore()
+    {
+        ctx.font = "24px Times New Roman";
+        ctx.fillText("Drunk level: " + nakov.drunkLevel, 20, 30);
+    }
+
+    function gameLoop() {
 		    if (isStarted && !isPaused) {
                 cls();
                 animateNakov();
@@ -162,12 +171,13 @@ function game() {
                 update(rakia1, 2);
                 animate(rakia1, rakiaImg, 1);
                 draw();
+                drawScore();
                 //restartGame();
             }
             if (isPaused) {
                 ctx.fillText('Paused',100,100);
             }
-            if (nakov.drunkLevel>=5){
+            if (nakov.drunkLevel>=1){
                 restartGame();
             }
             requestAnimationFrame(gameLoop);
@@ -335,7 +345,7 @@ function game() {
 
 		gameLoop();
     function draw() {
-        // catcher
+         // catcher
         //clearing the frame
         ctx.clearRect(0, 0, 800, 600);
 
@@ -375,6 +385,8 @@ function game() {
        }
 
         function restartGame (){
+
+
             nakov.drunkLevel = 0;
             bira.currentPos.x = startingCoordinates[0];
             bira.currentPos.y = Math.min(-110, -Math.random() * 300);
@@ -390,7 +402,7 @@ function game() {
             salataShopska.currentPos.y = Math.min(-110, -Math.random() * 300);
             nakov.startPos.x = 360;
             nakov.startPos.y = 490;
-            ctx.fillText("Tи си пиян\nPress 's' to restart!", 100,100);
+            ctx.fillText("Nakov got drunk again.\nPress 's' to restart!", 100,100);
             isPaused = false;
             isStarted = false;
         }
