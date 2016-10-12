@@ -42,6 +42,7 @@ function game() {
 	let gameTimer = null;
 	let elapsedTime = 0;
     let audio = document.getElementById("diamanti");
+    let isPlayMusic = false;
 
 
 	function randomCoordinates(startingCoordinates) {
@@ -144,6 +145,8 @@ function game() {
 		// registers the key 'S'
 		if (e.keyCode == 83) {
 			isStarted = true;
+            audio.pause();
+            audio.currentTime = 0;
 			// starts the game timer
 			if (!gameTimer) gameTimer = setInterval(setTime, 1000);
 		}
@@ -282,10 +285,9 @@ function game() {
 		isPaused = false;
 		isStarted = false;
 		elapsedTime = 0;
-        setTimeout(playMusic, 500);
-        function playMusic() {
-            audio.play();
-        }
+        isPlayMusic = true;
+        audio.play();
+
 		clearInterval(gameTimer);
 		gameTimer = null;
 		ctx.drawImage(diamantiImg, 200, 200);
