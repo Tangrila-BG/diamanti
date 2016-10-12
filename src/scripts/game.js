@@ -41,6 +41,7 @@ function game() {
 	let isStarted = false;
 	let gameTimer = null;
 	let elapsedTime = 0;
+    let audio = document.getElementById("diamanti");
 
 
 	function randomCoordinates(startingCoordinates) {
@@ -281,6 +282,10 @@ function game() {
 		isPaused = false;
 		isStarted = false;
 		elapsedTime = 0;
+        setTimeout(playMusic, 500);
+        function playMusic() {
+            audio.play();
+        }
 		clearInterval(gameTimer);
 		gameTimer = null;
 		ctx.drawImage(diamantiImg, 200, 200);
