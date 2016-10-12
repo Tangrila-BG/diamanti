@@ -23,7 +23,8 @@
 
 
 function game() {
-	ctx.fillText('Press "S" to start.', 380, 300);
+	//ctx.fillText('Press "S" to start.', 380, 300);
+    msg("Press 'S' to start. Press 'P' to pause.");
 
 	let nakovImg = new Image();
 	let salataShopskaImg = new Image();
@@ -281,7 +282,7 @@ function game() {
 		nakov.startPos.x = 360;
 		nakov.startPos.y = 490;
 		nakov.drankBottles = 1;
-		msg();
+		msg("You got drunk! Go to sleep or press 's' to restart");
 		isPaused = false;
 		isStarted = false;
 		elapsedTime = 0;
@@ -291,20 +292,21 @@ function game() {
 		clearInterval(gameTimer);
 		gameTimer = null;
 		ctx.drawImage(diamantiImg, 200, 200);
-		function msg() {
-			ctx.save();
-			ctx.font="26px Times New Roman";
-			ctx.shadowColor="black";
-			ctx.shadowBlur=7;
-			ctx.lineWidth=5;
-			ctx.strokeText("You got drunk! Go to sleep or press 's' to restart", 200, 100);
-			ctx.shadowBlur=0;
-			ctx.fillStyle="white";
-			ctx.fillText("You got drunk! Go to sleep or press 's' to restart!", 200, 100);
-			ctx.fillText("You got drunk! Go to sleep or press 's' to restart!", 200, 100);
-			ctx.restore();
-		}
 	}
+
+    function msg(string) {
+        ctx.save();
+        ctx.font="26px Times New Roman";
+        ctx.shadowColor="black";
+        ctx.shadowBlur=7;
+        ctx.lineWidth=5;
+        ctx.strokeText(string, 200, 100);
+        ctx.shadowBlur=0;
+        ctx.fillStyle="white";
+        ctx.fillText(string, 200, 100);
+        ctx.fillText(string, 200, 100);
+        ctx.restore();
+    }
 
 	function score() {
 		ctx.save();
