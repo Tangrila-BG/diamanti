@@ -348,7 +348,7 @@ function game() {
         //clearing the frame
         ctx.clearRect(0, 0, 800, 600);
 
-        // salads
+        // salads1
         ctx.drawImage(nakovImg, nakov.currentPos.x, nakov.currentPos.y);
 
         ctx.drawImage(salataShopskaImg, salataShopska.currentPos.x, salataShopska.currentPos.y);
