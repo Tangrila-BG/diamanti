@@ -185,7 +185,7 @@ function game() {
 		if (isPaused) {
 			ctx.fillText('Paused', canvas.width - 85, 60);
 		}
-		if (nakov.drunkLevel >= 1) {
+		if (nakov.drunkLevel >= 5) {
 			restartGame();
 		}
 		requestAnimationFrame(gameLoop);
@@ -297,11 +297,11 @@ function game() {
 			ctx.shadowColor="black";
 			ctx.shadowBlur=7;
 			ctx.lineWidth=5;
-			ctx.strokeText("Nakov got drunk again.\nPress 's' to restart!", 200, 100);
+			ctx.strokeText("You got drunk! Go to sleep or press 's' to restart", 200, 100);
 			ctx.shadowBlur=0;
 			ctx.fillStyle="white";
-			ctx.fillText("Nakov got drunk again.\nPress 's' to restart!", 200, 100);
-			ctx.fillText("Nakov got drunk again.\nPress 's' to restart!", 200, 100);
+			ctx.fillText("You got drunk! Go to sleep or press 's' to restart!", 200, 100);
+			ctx.fillText("You got drunk! Go to sleep or press 's' to restart!", 200, 100);
 			ctx.restore();
 		}
 	}
