@@ -30,11 +30,13 @@ function game() {
 	let biraImg = new Image();
 	let rakiaImg = new Image();
 	let salataImg = new Image();
+	let diamantiImg = new Image();
 	biraImg.src = 'images/bira.png';
 	rakiaImg.src = 'images/rakia.png';
 	salataShopskaImg.src = 'images/salata-shopska.png';
 	salataImg.src = 'images/salata.png';
 	nakovImg.src = 'images/nakov.png';
+	diamantiImg.src = 'images/diamanti.png';
 	let isPaused = false;
 	let isStarted = false;
 	let gameTimer = null;
@@ -179,7 +181,7 @@ function game() {
 		if (isPaused) {
 			ctx.fillText('Paused', 100, 100);
 		}
-		if (nakov.drunkLevel >= 5) {
+		if (nakov.drunkLevel >= 1) {
 			restartGame();
 		}
 		requestAnimationFrame(gameLoop);
@@ -274,12 +276,14 @@ function game() {
 		salataShopska.currentPos.y = Math.min(-110, -Math.random() * 300);
 		nakov.startPos.x = 360;
 		nakov.startPos.y = 490;
+		nakov.drankBottles = 1;
 		ctx.fillText("Nakov got drunk again.\nPress 's' to restart!", 100, 100);
 		isPaused = false;
 		isStarted = false;
 		elapsedTime = 0;
 		clearInterval(gameTimer);
 		gameTimer = null;
+		ctx.drawImage(diamantiImg, 200, 200);
 	}
 
 	function score() {
