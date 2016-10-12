@@ -152,6 +152,16 @@ function game() {
     {
         ctx.font = "24px Times New Roman";
         ctx.fillText("Drunk level: " + nakov.drunkLevel, 20, 30);
+        var startTime = new Date().getTime();
+        var time = parseInt((new Date() - startTime)/1000 );
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle="red";
+        ctx.font="14px Verdana"
+        // draw the running time at half opacity
+        ctx.globalAlpha=0.50;
+        ctx.fillText(time+" secs",canvas.width-200,25);
+        ctx.restore();
     }
 
     function gameLoop() {
@@ -177,7 +187,7 @@ function game() {
             if (isPaused) {
                 ctx.fillText('Paused',100,100);
             }
-            if (nakov.drunkLevel>=1){
+            if (nakov.drunkLevel>=5){
                 restartGame();
             }
             requestAnimationFrame(gameLoop);
