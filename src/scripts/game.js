@@ -69,11 +69,11 @@ function game() {
 		velX: 0,
 		keys: [],
 		drunkLevel: 0,
-		maxSpeed: 10
+		maxSpeed: 10,
+		drankBottles: 1
 	};
 
 	let salata = {
-		//startPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
 		dimensions: {x: 130, y: 110},
 		currentPos: {x: startingCoordinates[0], y: Math.min(-110, -Math.random() * 500)},
 		velY: 0,
@@ -82,7 +82,6 @@ function game() {
 	objects.push(salata);
 
 	let salataShopska = {
-		//startPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
 		dimensions: {x: 130, y: 110},
 		currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
 		velY: 0,
@@ -91,6 +90,7 @@ function game() {
 	objects.push(salataShopska);
 
 	let bira = {
+		type: 'alcohol',
 		dimensions: {x: 45, y: 110},
 		currentPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
 		velY: 0,
@@ -100,6 +100,7 @@ function game() {
 	objects.push(bira);
 
 	let bira1 = {
+		type: 'alcohol',
 		dimensions: {x: 45, y: 110},
 		currentPos: {x: startingCoordinates[1], y: Math.min(-110, -Math.random() * 500)},
 		velY: 0,
@@ -109,6 +110,7 @@ function game() {
 	objects.push(bira1);
 
 	let rakia = {
+		type: 'alcohol',
 		dimensions: {x: 35, y: 110},
 		currentPos: {x: startingCoordinates[3], y: Math.min(-110, -Math.random() * 500)},
 		velY: 0,
@@ -118,6 +120,7 @@ function game() {
 	objects.push(rakia);
 
 	let rakia1 = {
+		type: 'alcohol',
 		dimensions: {x: 35, y: 110},
 		currentPos: {x: startingCoordinates[2], y: Math.min(-110, -Math.random() * 500)},
 		velY: 0,
@@ -170,6 +173,7 @@ function game() {
 			animate(rakia1, 1);
 			draw();
 			drawScore();
+			score();
 			timer();
 		}
 		if (isPaused) {
@@ -238,6 +242,8 @@ function game() {
 			currentObject.currentPos.y = Math.min(-110, -Math.random() * 300);
 			currentObject.currentPos.x = startingCoordinates[index];
 			currentObject.velY = 0;
+			if (currentObject.type == 'alcohol')
+				nakov.drankBottles++;
 		}
 	}
 
@@ -276,13 +282,21 @@ function game() {
 		gameTimer = null;
 	}
 
+	function score() {
+		ctx.save();
+		ctx.font="24px New Times Roman";
+		let score = Math.round(elapsedTime * 100 / nakov.drankBottles);
+		ctx.fillText(`Score ${score}`, 20, 60);
+		ctx.restore();
+	}
+
 	function timer() {
 		if (isStarted) {
 			ctx.save();
 			ctx.beginPath();
 			ctx.fillStyle = "red";
-			ctx.font="ctx14px New Times Roman";
-			ctx.fillText(elapsedTime+" secs",canvas.width -75,25);
+			ctx.font = "24px New Times Roman";
+			ctx.fillText(`${elapsedTime} secs`, canvas.width - 85, 30);
 			ctx.restore();
 		}
 	}
