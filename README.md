@@ -1,4 +1,4 @@
 # diamanti
 SoftUni - JavaScript project.
 <br/>Demo:
-https://jsfiddle.net/Tangrila/t9469chu/3/
+<a href="https://htmlpreview.github.io/?https://github.com/Tangrila-BG/diamanti/blob/master/src/main.html">Click</a>
